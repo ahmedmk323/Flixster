@@ -4,7 +4,6 @@ import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.codepath.asynchttpclient.AsyncHttpClient
@@ -13,7 +12,7 @@ import okhttp3.Headers
 import org.json.JSONException
 
 private const val NOW_PLAYING_URL=
-    "https://api.themoviedb.org/3/movie/now_playing?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed"
+    "https://api.themoviedb.org/3/movie/now_playing?api_key=bc7a39a4659e9f7b0710e5cdbf153dba"
 private const val TAG= "MainActivity"
 private const val TAG2= "Orientation"
 
@@ -25,6 +24,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+        supportActionBar?.setLogo(R.drawable.review_icon)
+        supportActionBar?.setDisplayUseLogoEnabled(true)
         rvMovies = findViewById(R.id.rvMovies)
         val orientation = resources.configuration.orientation
         var isLand = false
@@ -36,7 +38,6 @@ class MainActivity : AppCompatActivity() {
         val movieAdapter = MovieAdapter(this, movies, isLand)
         rvMovies.adapter = movieAdapter
         rvMovies.layoutManager = LinearLayoutManager(this)
-
         val client = AsyncHttpClient()
 
         client.get(NOW_PLAYING_URL, object: JsonHttpResponseHandler(){
